@@ -1,3 +1,5 @@
+#IUS spec file for php56u-pecl-pthreads, forked from:
+
 # spec file for php-pecl-pthreads
 #
 # Copyright (c) 2013-2015 Remi Collet
@@ -6,57 +8,45 @@
 #
 # Please, preserve the changelog entries
 #
-%{?scl:          %scl_package        php-pecl-pthreads}
+%global pecl_name pthreads
 %{!?php_inidir:  %global php_inidir  %{_sysconfdir}/php.d}
 %{!?__pecl:      %global __pecl      %{_bindir}/pecl}
 %{!?__php:       %global __php       %{_bindir}/php}
 
-%global pecl_name pthreads
-%if "%{php_version}" < "5.6"
-%global ini_name  %{pecl_name}.ini
-%else
 %global ini_name  40-%{pecl_name}.ini
-%endif
+
+%define real_name php-pecl-pthreads
+%define php_base php56u
 
 Summary:        Threading API
-Name:           %{?scl_prefix}php-pecl-%{pecl_name}
+Name:           %{php_base}-pecl-pthreads
 Version:        2.0.10
-Release:        1%{?dist}%{!?nophptag:%(%{__php} -r 'echo ".".PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')}
+Release:        2.ius%{?dist}
 License:        PHP
 Group:          Development/Languages
 URL:            http://pecl.php.net/package/%{pecl_name}
 Source0:        http://pecl.php.net/get/%{pecl_name}-%{version}.tgz
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires:  %{?scl_prefix}php-zts-devel > 5.3
-BuildRequires:  %{?scl_prefix}php-pear
+BuildRequires:  %{php_base}-zts-devel
+BuildRequires:  %{php_base}-pear
 
 Requires(post): %{__pecl}
 Requires(postun): %{__pecl}
-Requires:       %{?scl_prefix}php(zend-abi) = %{php_zend_api}
-Requires:       %{?scl_prefix}php(api) = %{php_core_api}
-%{?_sclreq:Requires: %{?scl_prefix}runtime%{?_sclreq}%{?_isa}}
+Requires:      %{php_base}(zend-abi) = %{php_zend_api}
+Requires:      %{php_base}(api) = %{php_core_api}
 
-Provides:       %{?scl_prefix}php-%{pecl_name} = %{version}
-Provides:       %{?scl_prefix}php-%{pecl_name}%{?_isa} = %{version}
-Provides:       %{?scl_prefix}php-pecl(%{pecl_name}) = %{version}
-Provides:       %{?scl_prefix}php-pecl(%{pecl_name})%{?_isa} = %{version}
+Provides:     %{real_name} = %{version}
+Provides:     php-%{pecl_name} = %{version}
+Provides:     php-%{pecl_name}%{?_isa} = %{version}
+Provides:     php-pecl(%{pecl_name}) = %{version}
+Provides:     php-pecl(%{pecl_name})%{?_isa} = %{version}
+Provides:     %{php_base}-%{pecl_name} = %{version}
+Provides:     %{php_base}-%{pecl_name}%{?_isa} = %{version}
+Provides:     %{php_base}-pecl(%{pecl_name}) = %{version}
+Provides:     %{php_base}-pecl(%{pecl_name})%{?_isa} = %{version}
 
-%if "%{?vendor}" == "Remi Collet" && 0%{!?scl:1}
-# Other third party repo stuff
-Obsoletes:     php53-pecl-%{pecl_name}  <= %{version}
-Obsoletes:     php53u-pecl-%{pecl_name} <= %{version}
-Obsoletes:     php54-pecl-%{pecl_name}  <= %{version}
-Obsoletes:     php54w-pecl-%{pecl_name} <= %{version}
-%if "%{php_version}" > "5.5"
-Obsoletes:     php55u-pecl-%{pecl_name} <= %{version}
-Obsoletes:     php55w-pecl-%{pecl_name} <= %{version}
-%endif
-%if "%{php_version}" > "5.6"
-Obsoletes:     php56u-pecl-%{pecl_name} <= %{version}
-Obsoletes:     php56w-pecl-%{pecl_name} <= %{version}
-%endif
-%endif
+Conflicts: %{real_name} < %{version}
 
 %if 0%{?fedora} < 20 && 0%{?rhel} < 7
 # Filter shared private
@@ -71,8 +61,6 @@ A compatible Threading API for PHP5.3+
 Documentation: http://php.net/pthreads
 
 This extension is only available for PHP in ZTS mode.
-
-Package built for PHP %(%{__php} -r 'echo PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')%{?scl: as Software Collection}.
 
 
 %prep
@@ -167,6 +155,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Jun 01 2015 Ben Harper <ben.harper@rackspace.com> - 2.0.10-2.ius
+- porting from Remi's github repo https://github.com/remicollet/remirepo/blob/b748aa3aa58473258b7ec2012bd74c5105b7b862/php/pecl/php-pecl-pthreads/php-pecl-pthreads.spec
+
 * Wed Oct 01 2014 Remi Collet <remi@fedoraproject.org> - 2.0.10-1
 - Update to 2.0.10 (stable)
 
