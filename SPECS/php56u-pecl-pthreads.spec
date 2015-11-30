@@ -95,8 +95,6 @@ make %{?_smp_mflags}
 
 
 %install
-rm -rf %{buildroot}
-
 make -C %{pecl_name}-%{version} \
      install INSTALL_ROOT=%{buildroot}
 
@@ -140,12 +138,7 @@ REPORT_EXIT_STATUS=1 \
 %{_bindir}/zts-php -n run-tests.php
 
 
-%clean
-rm -rf %{buildroot}
-
-
 %files
-%defattr(-,root,root,-)
 %{?_licensedir:%license %{pecl_name}-%{version}/LICENSE}
 %doc %{pecl_docdir}/%{pecl_name}
 %{pecl_xmldir}/%{name}.xml
