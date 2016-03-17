@@ -29,8 +29,8 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  %{php_base}-zts-devel
 BuildRequires:  %{php_base}-pear
 
-Requires(post): %{__pecl}
-Requires(postun): %{__pecl}
+Requires(post): %{php_base}-pear
+Requires(postun): %{php_base}-pear
 Requires:      %{php_base}(zend-abi) = %{php_zend_api}
 Requires:      %{php_base}(api) = %{php_core_api}
 
@@ -157,6 +157,7 @@ REPORT_EXIT_STATUS=1 \
 - Clean up provides
 - Clean up filters
 - Install package.xml as %%{pecl_name}.xml, not %%{name}.xml
+- Explictly require IUS pear package for %%post and %%postun
 
 * Mon Jun 01 2015 Ben Harper <ben.harper@rackspace.com> - 2.0.10-2.ius
 - porting from Remi's github repo https://github.com/remicollet/remirepo/blob/b748aa3aa58473258b7ec2012bd74c5105b7b862/php/pecl/php-pecl-pthreads/php-pecl-pthreads.spec
