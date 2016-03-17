@@ -1,5 +1,5 @@
-#IUS spec file for php56u-pecl-pthreads, forked from:
-
+# IUS spec file for php56u-pecl-pthreads, forked from:
+#
 # spec file for php-pecl-pthreads
 #
 # Copyright (c) 2013-2015 Remi Collet
@@ -9,10 +9,6 @@
 # Please, preserve the changelog entries
 #
 %global pecl_name pthreads
-%{!?php_inidir:  %global php_inidir  %{_sysconfdir}/php.d}
-%{!?__pecl:      %global __pecl      %{_bindir}/pecl}
-%{!?__php:       %global __php       %{_bindir}/php}
-
 %global ini_name  40-%{pecl_name}.ini
 %define php_base php56u
 
@@ -25,7 +21,6 @@ Group:          Development/Languages
 URL:            http://pecl.php.net/package/%{pecl_name}
 Source0:        http://pecl.php.net/get/%{pecl_name}-%{version}.tgz
 
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  %{php_base}-zts-devel
 BuildRequires:  %{php_base}-pear
 
