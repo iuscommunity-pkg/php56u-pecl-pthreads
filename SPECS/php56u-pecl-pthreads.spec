@@ -14,14 +14,12 @@
 %{!?__php:       %global __php       %{_bindir}/php}
 
 %global ini_name  40-%{pecl_name}.ini
-
-%define real_name php-pecl-pthreads
 %define php_base php56u
 
 Summary:        Threading API
 Name:           %{php_base}-pecl-pthreads
 Version:        2.0.10
-Release:        2.ius%{?dist}
+Release:        3.ius%{?dist}
 License:        PHP
 Group:          Development/Languages
 URL:            http://pecl.php.net/package/%{pecl_name}
@@ -36,17 +34,24 @@ Requires(postun): %{__pecl}
 Requires:      %{php_base}(zend-abi) = %{php_zend_api}
 Requires:      %{php_base}(api) = %{php_core_api}
 
-Provides:     %{real_name} = %{version}
+# provide the stock name
+Provides:     php-pecl-%{pecl_name} = %{version}
+Provides:     php-pecl-%{pecl_name}%{?_isa} = %{version}
+
+# provide the stock and IUS names without pecl
 Provides:     php-%{pecl_name} = %{version}
 Provides:     php-%{pecl_name}%{?_isa} = %{version}
-Provides:     php-pecl(%{pecl_name}) = %{version}
-Provides:     php-pecl(%{pecl_name})%{?_isa} = %{version}
 Provides:     %{php_base}-%{pecl_name} = %{version}
 Provides:     %{php_base}-%{pecl_name}%{?_isa} = %{version}
+
+# provide the stock and IUS names in pecl() format
+Provides:     php-pecl(%{pecl_name}) = %{version}
+Provides:     php-pecl(%{pecl_name})%{?_isa} = %{version}
 Provides:     %{php_base}-pecl(%{pecl_name}) = %{version}
 Provides:     %{php_base}-pecl(%{pecl_name})%{?_isa} = %{version}
 
-Conflicts: %{real_name} < %{version}
+# conflict with the stock name
+Conflicts:    php-pecl-%{pecl_name} < %{version}
 
 %if 0%{?fedora} < 20 && 0%{?rhel} < 7
 # Filter shared private
@@ -148,6 +153,9 @@ REPORT_EXIT_STATUS=1 \
 
 
 %changelog
+* Thu Mar 17 2016 Carl George <carl.george@rackspace.com> - 2.0.10-3.ius
+- Clean up provides
+
 * Mon Jun 01 2015 Ben Harper <ben.harper@rackspace.com> - 2.0.10-2.ius
 - porting from Remi's github repo https://github.com/remicollet/remirepo/blob/b748aa3aa58473258b7ec2012bd74c5105b7b862/php/pecl/php-pecl-pthreads/php-pecl-pthreads.spec
 
