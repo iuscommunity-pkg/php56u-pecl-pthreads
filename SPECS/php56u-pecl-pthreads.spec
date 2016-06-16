@@ -50,9 +50,8 @@ Conflicts:    php-pecl-%{pecl_name} < %{version}
 
 # RPM 4.8
 %{?filter_provides_in: %filter_provides_in %{php_extdir}/.*\.so$}
+%{?filter_provides_in: %filter_provides_in %{php_ztsextdir}/.*\.so$}
 %{?filter_setup}
-# RPM 4.9
-%global __provides_exclude_from %{?__provides_exclude_from:%__provides_exclude_from|}%{php_extdir}/.*\\.so$
 
 
 %description
@@ -148,6 +147,9 @@ REPORT_EXIT_STATUS=1 \
 
 
 %changelog
+* Thu Jun 16 2016 Ben Harper <ben.harper@rackspace.com> - 2.0.10-4.ius
+- update filters to include zts
+
 * Thu Mar 17 2016 Carl George <carl.george@rackspace.com> - 2.0.10-3.ius
 - Clean up provides
 - Clean up filters
