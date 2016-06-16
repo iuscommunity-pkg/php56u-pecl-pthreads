@@ -15,7 +15,7 @@
 Summary:        Threading API
 Name:           %{php_base}-pecl-pthreads
 Version:        2.0.10
-Release:        3.ius%{?dist}
+Release:        4.ius%{?dist}
 License:        PHP
 Group:          Development/Languages
 URL:            http://pecl.php.net/package/%{pecl_name}
